@@ -20,7 +20,13 @@ export const authenticateToken = (
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: 'access' | 'refresh' };
+        
+        // Only allow access tokens for authentication
+        if (decoded.type !== 'access') {
+            return res.status(403).json({ error: 'Invalid token type' });
+        }
+
         req.userId = decoded.userId;
         next();
     } catch (error) {
