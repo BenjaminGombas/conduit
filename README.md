@@ -2,7 +2,7 @@
 
 A modern, real-time chat platform inspired by Discord, built with React, Node.js, and PostgreSQL. Conduit provides seamless communication and community building features with a clean, modern interface.
 
-![Conduit Logo](/client/public/conduit-high-resolution-logo-transparent (2).svg)
+![Conduit Logo](/client/public/conduit-high-resolution-logo-transparent.svg)
 
 ## Features
 
