@@ -12,6 +12,8 @@ import authRoutes from './routes/auth';
 import serverRoutes from './routes/servers';
 import messageRoutes from './routes/messages';
 import inviteRoutes from './routes/invites';
+import uploadRoutes from './routes/upload';
+import path from "path";
 
 dotenv.config();
 
@@ -21,7 +23,7 @@ const io = new Server(httpServer, {
     cors: {
         origin: process.env.CLIENT_URL || "http://localhost:3000",
         credentials: true,
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "PATCH"]
     }
 });
 
@@ -54,6 +56,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/servers', serverRoutes);
 app.use('/api', messageRoutes);
 app.use('/api', inviteRoutes)
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use('/api/upload', uploadRoutes)
 
 // Health check route
 app.get('/health', async (req, res) => {

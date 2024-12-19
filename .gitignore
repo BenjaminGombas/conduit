@@ -57,6 +57,7 @@ redis_data/
 # Production build files
 /client/build/
 /server/dist/
+/server/uploads/
 
 # Misc
 .DS_Store

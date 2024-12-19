@@ -32,6 +32,13 @@ export const fetchServerMembers = createAsyncThunk(
     return { serverId, members: response.data };
   }
 );
+export const kickMember = createAsyncThunk(
+    'serverMembers/kickMember',
+    async ({ serverId, memberId }: { serverId: string; memberId: string }) => {
+      await api.delete(`/servers/${serverId}/members/${memberId}`);
+      return { serverId, memberId };
+    }
+);
 
 const serverMembersSlice = createSlice({
   name: 'serverMembers',
@@ -63,7 +70,16 @@ const serverMembersSlice = createSlice({
       .addCase(fetchServerMembers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch server members';
-      });
+      })
+        .addCase(kickMember.fulfilled, (state, action) => {
+          const { serverId, memberId } = action.payload;
+          if (state.members[serverId]) {
+            state.members[serverId] = state.members[serverId].filter(
+                member => member.user_id !== memberId
+            );
+          }
+        });
+
   }
 });
 

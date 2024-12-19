@@ -15,6 +15,18 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+export const uploadFile = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await api.post('/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data;
+};
 
 api.interceptors.request.use((config) => {
   if (accessToken) {
